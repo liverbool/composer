@@ -1,4 +1,4 @@
-Composer - Dependency Management for PHP
+Composer - เครื่องมือจัดการไฟล์ที่เกี่ยวข้องสำหรับ PHP
 ========================================
 
 Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere.
