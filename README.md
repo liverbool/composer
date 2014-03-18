@@ -47,7 +47,7 @@ You can now run Composer by executing the `bin/composer` script: `php /path/to/c
 Global installation of Composer (manual)
 ----------------------------------------
 
-Follow instructions [in the documentation](http://getcomposer.org/doc/00-intro.md#globally)
+Follow instructions [in the documentation](https://github.com/liverbool/composer/blob/master/doc/00-intro.md#แบบใช้ร่วมกัน-Globally)
 
 Updating Composer
 -----------------
