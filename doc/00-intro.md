@@ -1,37 +1,24 @@
-# Introduction
+# แนะนำ
+Composer เป็นเครื่องมือสำหรับบริหารจัดการซอร์ซโค้ด (PHP) ที่เกี่ยวที่คุณนำมาใช้ใชโปรเจ็ค (Dependency Management --PHP) โดยที่คุณแค่กำหนดค่าแพคเก็จ ​(​Library) ที่คุณต้องการใช้งานไว้ในไฟล์คอนฟิก Composer จะดาวโหลดและติดตั้งเข้าไปในโปรเจ็คคุณให้เอง ... ว้าววว ;)
 
-Composer is a tool for dependency management in PHP. It allows you to declare
-the dependent libraries your project needs and it will install them in your
-project for you.
+## เครื่องมือจัดการส่วนที่เกี่ยวข้อง (Dependency Manager)
+จริงๆแล้ว Composer ไม่ใช่ตัวจัดการแพคเก็จ!! (Package manager), จริงอยู่ที่ Composer ทำงานเกี่ยวกับ "แพคเก็จ (Packages)" หรือ Libraries แต่ Composer ก็จัดการมันเป็นโปรเจ็คๆ แค่พื้นฐานเท่านั้น โดยทำการติดตั้งแพคเก็จที่เกี่ยวข้องนั้นไว้ในโฟล์เดอร์ภายในโปรเจ็ค (โดยปกติคือโฟล์เดอร์ `vendor`) และโดยค่าเริ่มต้นแล้ว Composer ไม่ติดตั้งอะไรไว้นอกโปรเจ็คของคุณ (Globally), *0* นั่นแหละมันก็เลยเป็นเพียง "เครื่องมือจัดการส่วนที่เกี่ยวข้อง"
 
-## Dependency management
+แนวคิดนี้ไม่ใช่ของใหม่ และ Composer ก็ได้รับอิทธิพลมาจาก [npm](http://npmjs.org/) ของ node (nodejs) และ
+[bundler](http://gembundler.com/) ของ ruby และนี่ก็เป็นเครื่องมีออะไรแบบนั้นสำหรับ PHP :)
 
-Composer is not a package manager. Yes, it deals with "packages" or libraries, but
-it manages them on a per-project basis, installing them in a directory (e.g. `vendor`)
-inside your project. By default it will never install anything globally. Thus,
-it is a dependency manager.
+เหล่านี้คือปัญหาต่างๆที่ Composer ช่วยแก้ให้ได้:
 
-This idea is not new and Composer is strongly inspired by node's [npm](http://npmjs.org/)
-and ruby's [bundler](http://gembundler.com/). But there has not been such a tool
-for PHP.
+a) โปรเจ็คของคุณต้องใช้ Libraries ตัวอื่นๆ ร่วมด้วย
 
-The problem that Composer solves is this:
+b) ไลบรารี่บางตัวที่คุณต้องใช้นั้น ก็ต้องใช้ไลบรารี่ตัวอื่นๆ อีกเหมือนกัน
 
-a) You have a project that depends on a number of libraries.
+c) คุณต้องการกำหนดสิ่งที่โปรเจ็คของคุณจำเป็นต้องมี (Depend on)
 
-b) Some of those libraries depend on other libraries.
+d) Composer จะออกไปค้นหาเวอร์ชั่นของแพคเก็นที่ต้องติดตั้ง และจะติดตั้งมันให้ (แปลว่ามันจะต้องไปดาวน์โหลดมาติดตั้ง)
 
-c) You declare the things you depend on.
-
-d) Composer finds out which versions of which packages need to be installed, and
-   installs them (meaning it downloads them into your project).
-
-## Declaring dependencies
-
-Let's say you are creating a project, and you need a library that does logging.
-You decide to use [monolog](https://github.com/Seldaek/monolog). In order to
-add it to your project, all you need to do is create a `composer.json` file
-which describes the project's dependencies.
+## การกำหนดส่วนที่เกี่ยวข้อง (Declaring dependencies)
+ลองดูกัน, ตอนที่คุณสร้างโปรเจ็คใหม่ขึ้นมาซักอัน และก็ต้องการใช้ไลบรารี่ที่ทำหน้าที่เก็บล็อกไฟล์ (Loggin) สมมุติว่าคุณเลือกใช้ [monolog](https://github.com/Seldaek/monolog) คุณก็ต้องเพิ่มมันเข้าไปในโปรเจ็คของคุณ, การใช้ Composer คุณก็แค่เพิ่มรายชื่อมันเข้าไปในรายการของไฟล์ `composer.json` ซึ่งใช้บอกรายลเอียดส่วนที่เกี่ยวข้องที่คุณต้องใช้ในโปรเจ็ค เช่น
 
     {
         "require": {
@@ -39,129 +26,112 @@ which describes the project's dependencies.
         }
     }
 
-We are simply stating that our project requires some `monolog/monolog` package,
-any version beginning with `1.2`.
+นี่คือการบอกว่าโปรเจ็คของคุณต้องการใช้แพคเก็จ (require) `monolog/monolog`,
+โดยระบุเบอร์ชั่นที่ขึ้นต้นด้วย `1.2`
 
-## System Requirements
+## ความต้องการของระบบ (System Requirements)
 
-Composer requires PHP 5.3.2+ to run. A few sensitive php settings and compile
-flags are also required, but the installer will warn you about any
-incompatibilities.
+Composer ทำงานบน PHP 5.3.2+ (ขึ้นไป) มีอีกหลายๆ อย่างที่ต้องกำหนดค่าใน PHP และการคอมไพล์ ตอนที่คุณติดตั้ง Composer จะแจ้งเตือนคุณเองว่าอะไรบ้างที่เข้ากันได้หรือไม่ได้
 
-To install packages from sources instead of simple zip archives, you will need
-git, svn or hg depending on how the package is version-controlled.
+การติดตั้ง Composer จากซอร์ซโคด (ไม่ใช่การติดตั้งจากไฟล์ zip) คุณต้องมี `git`, `hg` หรือ `svn` ติดตั้งไว้ในเครื่องด้วย (เหล่านี้คือเครื่องมือจัดการเวอร์ชั่นหรือ Version control)
 
-Composer is multi-platform and we strive to make it run equally well on Windows,
+Composer ใช้งานได้แบบ multi-platform และใช้งานเหมือนกันหมดทั้ง Windows,
 Linux and OSX.
 
-## Installation - *nix
+## การติดตั้ง (Installation - *nix)
 
-### Downloading the Composer Executable
+### การดาวน์โหลดตัวติดตั้ง
 
-#### Locally
+#### แบบใช้เฉพาะโปรเจ็ค (Locally)
 
-To actually get Composer, we need to do two things. The first one is installing
-Composer (again, this means downloading it into your project):
+การใช้ Composer, เราต้องทำสองอย่าง อย่างแรกคือติดตั้ง
+Composer (นี่จะเป็นการดาวน์โหลดลงในโปรเจ็คของคุณ แปลว่าคุณต้องเข้าไปในโฟล์เดอร์โปรเจ็คก่อน):
 
     $ curl -sS https://getcomposer.org/installer | php
 
-This will just check a few PHP settings and then download `composer.phar` to
-your working directory. This file is the Composer binary. It is a PHAR (PHP
-archive), which is an archive format for PHP which can be run on the command
-line, amongst other things.
+การดาวโหลดนี้จะทำการตรวจสอบการตั้งค่าต่างของ PHP และดาวน์โหลดไฟล์ `composer.phar` มายังโฟล์เดอร์ของคุณ ไฟล์นี้เป็น Composer binary อยู่ในรูปแบบของ PHAR (PHP
+archive) ที่จะทำงานผ่าน PHP Command line
 
-You can install Composer to a specific directory by using the `--install-dir`
-option and providing a target directory (it can be an absolute or relative path):
+คุณสามารถระบุโฟล์เดอร์ที่จะติดตั้งก็ได้ ด้วยการเพิ่มคำสั่ง `--install-dir`
+ต่อท้ายและระบุโฟล์เดอร์ที่ต้องการ (เป็นพาธแบบ / (relative) หรือ \ (absolute) ก็ได้):
 
     $ curl -sS https://getcomposer.org/installer | php -- --install-dir=bin
 
-#### Globally
+#### แบบใช้ร่วมกัน (Globally)
+คุณสามารถวางไฟล์นี้ไว้ตรงไหนก็ได้ (`composer.phar`) ถ้าคุณวางไว้ใน `PATH` (ตัวแปรพาธของระบบที่เข้าถึงได้ทุกที่),
+คุณจะสามารถเรียกใช้ได้ทุกที่ บนระบบจำพวก unix คุณสามารถกำหนดให้มัน Run ได้โดยไม่ต้องเรียกคำสั่ง `php`
 
-You can place this file anywhere you wish. If you put it in your `PATH`,
-you can access it globally. On unixy systems you can even make it
-executable and invoke it without `php`.
-
-You can run these commands to easily access `composer` from anywhere on your system:
+ใช้คำส่งต่อไปนี้เพื่อสามารถเรียกใช้ `composer` ได้จากทุกๆที่ในระบบ
 
     $ curl -sS https://getcomposer.org/installer | php
     $ mv composer.phar /usr/local/bin/composer
 
-> **Note:** If the above fails due to permissions, run the `mv` line
-> again with sudo.
+> **หมายเหตุ:** ถ้าคุณติอเรื่อง permissions ในการใช้คำสั่ง `mv` ให้ใช้ `sudo` ขึ้นต้น
 
-Then, just run `composer` in order to run Composer instead of `php composer.phar`.
+จากนั้นคุณจะสามารถเรียกใช้แค่เพียงพิมพ์ `composer` แทนที่จะต้องพิมพ์ `php composer.phar`
 
-#### Globally (on OSX via homebrew)
+#### แบบใช้งานร่าวมกัน (Globally) บน OSX ด้วย homebrew
 
-Composer is part of the homebrew-php project.
+Composer เป็นส่วนหนึ่งของโปรเจ็ค homebrew-php
 
-1. Tap the homebrew-php repository into your brew installation if you haven't done
-   so yet: `brew tap josegonzalez/homebrew-php`
-2. Run `brew install josegonzalez/php/composer`.
-3. Use Composer with the `composer` command.
+1. เพิ่ม (Tap) homebrew-php repository เข้าในการติดตั้งของ brew ด้วยคำสั่ง: `brew tap josegonzalez/homebrew-php`
+2. พิมพ์คำสั่งติดตั้ง `brew install josegonzalez/php/composer`.
+3. ใช้งาน Composer ด้วยคำสั่ง `composer`
 
-> **Note:** If you receive an error saying PHP53 or higher is missing use this command to install php 
+> **หมายเหตุ:** ถ้ามีความผิดพลาดเกี่ยวกับ PHP53 หรือสูงกว่า ให้ใช้คำสั่งนี้ 
 > `brew install php53-intl`
 
-## Installation - Windows
+## การติดตั้งบน Windows
 
-### Using the Installer
+### ใช้ตัว Installer
 
-This is the easiest way to get Composer set up on your machine.
+นี่เป็นวิธีที่ง่ายที่สุดที่ใช้ในการติดตั้ง Composer ลงเครื่องของคุณ
 
-Download and run [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe),
-it will install the latest Composer version and set up your PATH so that you can
-just call `composer` from any directory in your command line.
+ดาวน์โหลดและเรียกใช้ [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe),
+ซึ่งจะทำการดาวน์โหลดเวอร์ชั่นล่าสุดของ Composer และติดตั้งลงใน PATH และหลังจากเสร็จแล้วก็แค่เรียกใช้ด้วยคำสั่ง `composer` ซึ่งสามารถเรียกได้จากทุกๆ ที่
 
-### Manual Installation
+### ติดตั้งเอง
 
-Change to a directory on your `PATH` and run the install snippet to download
+เปลี่ยนโฟล์เดอร์ไปที่ `PATH` (โฟล์เดอร์ระบบที่เข้าถึงได้ทุกที่) และใช้คำสั่งติดตั้ง
 composer.phar:
 
     C:\Users\username>cd C:\bin
     C:\bin>php -r "readfile('https://getcomposer.org/installer');" | php
 
-> **Note:** If the above fails due to readfile, use the `http` url or enable php_openssl.dll in php.ini
+> **หมายเหตุ:** ถ้าคำสั่งของบนมีปัญหาเกี่ยวกับการอ่านไฟล์ ให้ใช้ `http` หรือคุณต้องเปิดตัว php_openssl.dll ใน php.ini
 
-Create a new `composer.bat` file alongside `composer.phar`:
+สร้างไฟล์ชื่อว่า `composer.bat` เพื่อเรียก `composer.phar`:
 
     C:\bin>echo @php "%~dp0composer.phar" %*>composer.bat
 
-Close your current terminal. Test usage with a new terminal:
+ปิดหน้าต่าง terminal ออกไปเพื่อลองทดสอบ ด้วยการเปิดหน้าต่าง terminal อันใหม่ (run\cmd):
 
     C:\Users\username>composer -V
     Composer version 27d8904
 
     C:\Users\username>
 
-## Using Composer
+## การใช้งาน Composer
 
-We will now use Composer to install the dependencies of the project. If you
-don't have a `composer.json` file in the current directory please skip to the
-[Basic Usage](01-basic-usage.md) chapter.
+ตอนนี้เราสามารถใช้งาน Composer สำหรับการจัดการไฟล์ที่เกี่ยวข้องในโปรเจ็คของเราได้แล้ว ถ้าคุณยังไม่มีไฟล์ `composer.json` อยู่ในโปรเจ็คให้ข้ามไปอ่านที่บท
+[การใช้งานเบื้องต้น](01-basic-usage.md)
 
-To resolve and download dependencies, run the `install` command:
+ค้นหาและดาวน์โหลดไฟล์ที่เกี่ยวข้องด้วยคำสั่ง `install`:
 
     $ php composer.phar install
 
-If you did a global install and do not have the phar in that directory
-run this instead:
+ถ้าคุณติดตั้งแบบใช้ร่วมกันสามารถใช้คำสั่ง:
 
     $ composer install
 
-Following the [example above](#declaring-dependencies), this will download
-monolog into the `vendor/monolog/monolog` directory.
+[จากตัวอย่างด้านบน](#การกำหนดส่วนที่เกี่ยวข้อง-declaring-dependencies) Composer จะดาวน์โหลด
+monolog มาไว้ในโฟล์เดอร์ `vendor/monolog/monolog` ในโปรเจ็คของคุณ
 
-## Autoloading
-
-Besides downloading the library, Composer also prepares an autoload file that's
-capable of autoloading all of the classes in any of the libraries that it
-downloads. To use it, just add the following line to your code's bootstrap
-process:
+## การโหลดไฟล์อัตโนมัติ (Autoloading)
+นอกเหนือไปจากการดาวน์โหลดไฟล์ที่เกี่ยวข้องแล้ว Composer ทำการเตรียมไฟล์สำหรับโหลดอัตโนมัติไว้ด้วย คุณสามารถใช้คุณสมบัตินี้ได้ด้วยการเพิ่มไฟล์ `autoload.php` เข้าไปใจไฟล์เริ่มต้นโปรเจ็ค:
 
     require 'vendor/autoload.php';
 
-Woah! Now start using monolog! To keep learning more about Composer, keep
-reading the "Basic Usage" chapter.
+โว้ววว! ตอนนี้ก็สามารถใช้งาน monolog ได้แล้ว! ต่อไปเริ่มต้นเรียนรู้การใช้งานพื้นฐานได้จากบท "การใช้งานเบื้องต้น"
 
 [Basic Usage](01-basic-usage.md) &rarr;
